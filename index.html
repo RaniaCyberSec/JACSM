@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet FSE+ JACSM - Insertion par l'activité économique</title>
+    <meta name="description" content="Programme d'insertion professionnelle par le sport de la JACSM, soutenu par le FSE+ Métropole de Lyon.">
+
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --color-primary: #004494; /* Bleu institutionnel/FSE */
+            --color-secondary: #00a3de; /* Bleu clair dynamique */
+            --color-accent: #ffcc00; /* Jaune Europe pour détails */
+            --color-dark: #1a1a1a;
+            --color-gray: #f4f6f8;
+            --color-text: #333333;
+            --color-white: #ffffff;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --spacing-section: 4rem;
+            --radius: 8px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--color-text);
+            line-height: 1.6;
+            background-color: var(--color-white);
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        /* --- LAYOUT UTILS --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background-color: var(--color-secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 50px;
+            font-weight: 600;
+            border: 2px solid var(--color-primary);
+        }
+
+        .btn:hover {
+            background-color: var(--color-white);
+            color: var(--color-primary);
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: var(--color-white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-logos {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .logo-img {
+            height: 70px; 
+            object-fit: contain;
+            transition: transform 0.2s;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul { display: flex; gap: 25px; align-items: center; }
+        
+        nav a { 
+            font-weight: 500; 
+            color: var(--color-dark); 
+            font-size: 0.95rem;
+            position: relative;
+            padding-bottom: 5px; /* Espace pour le trait */
+        }
+        
+        nav a:hover { color: var(--color-secondary); }
+
+        /* --- SOULIGNEMENT JAUNE --- */
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px; 
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-accent); /* Jaune */
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after {
+            width: 100%; 
+        }
+
+        /* --- MODIF: Supprimer le trait sur le bouton Nous Contacter --- */
+        nav .btn::after {
+            display: none;
+        }
+
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 14rem 0; 
+            text-align: center;
+            margin-bottom: -50px; 
+            padding-bottom: 100px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+            opacity: 0.95;
+        }
+
+        /* --- ANIMATION PARTENAIRES --- */
+        .partners-section {
+            background: white;
+            padding: 30px 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 -10px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        /* --- MODIF: TITRE SIMPLE ET PLUS GROS (PAS DE STYLE BOUTON) --- */
+        .partners-label {
+            text-align: center;
+            font-size: 1.4rem; /* Police agrandie */
+            font-weight: 800; /* Gras pour être visible */
+            color: var(--color-dark);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block; /* Affichage simple bloc */
+        }
+
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 50px;
+            width: max-content;
+        }
+
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            gap: 60px;
+            min-width: 100%;
+            animation: scroll 25s linear infinite;
+        }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+
+        .marquee-logo {
+            height: 80px;
+            width: auto;
+            opacity: 0.6;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .marquee-logo:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .marquee-container:hover .marquee-content {
+            animation-play-state: paused;
+        }
+
+        /* --- CONTEXT SECTION --- */
+        .context {
+            padding: var(--spacing-section) 0;
+            background-color: var(--color-white);
+        }
+
+        .context-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .alert-box {
+            background-color: #fff3cd;
+            border-left:5px solid #ffcc00;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius);
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- PROGRAMS SECTION --- */
+        .programs {
+            padding: var(--spacing-section) 0;
+            background-color: var(--color-gray);
+        }
+
+        .program-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            transition: transform 0.3s ease;
+            
+            /* ANIMATION D'ENTRÉE */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUpFade 0.8s ease-out forwards;
+        }
+        
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Animation Keyframes */
+        @keyframes slideUpFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Délai en cascade pour les cartes */
+        .programs .program-card:nth-child(2) { animation-delay: 0.2s; }
+        .programs .program-card:nth-child(3) { animation-delay: 0.4s; }
+
+        .program-img {
+            background-color: var(--color-secondary);
+            height: 100%;
+            min-height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .program-content {
+            padding: 2.5rem;
+        }
+
+        .program-tag {
+            display: inline-block;
+            background-color: var(--color-primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        .program-tag.secondary { background-color: var(--color-secondary); }
+        .program-tag.tertiary { background-color: #e91e63; }
+
+        .program-content h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+        }
+
+        .program-list {
+            margin: 1.5rem 0;
+        }
+
+        .program-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .program-list li::before {
+            content: '✓';
+            color: var(--color-secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .note-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 12px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            color: #555;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* --- TARGET AUDIENCE --- */
+        .audience {
+            padding: var(--spacing-section) 0;
+            text-align: center;
+        }
+
+        .audience-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .audience-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 1.2rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--color-primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+        
+        .audience-item:hover {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary);
+            color: white;
+        }
+
+        /* --- RESULTS & STRATEGY (MODIF BORDER JAUNE) --- */
+        .results {
+            padding: var(--spacing-section) 0;
+            background-color: var(--color-dark);
+            color: white;
+        }
+
+        .results h2 { color: white; }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius);
+            
+            /* Animation de base */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer; 
+            border: 2px solid transparent; /* Prépare la bordure */
+        }
+        
+        /* Effet au survol léger */
+        .result-item:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-5px);
+        }
+
+        /* --- MODIF: État ACTIF (Au Clic) --- */
+        .result-item.active {
+            transform: scale(1.1); /* S'agrandit (Bougent) */
+            background: rgba(255,255,255,0.2);
+            z-index: 10;
+            
+            /* Border JAUNE demandé */
+            border: 3px solid var(--color-accent); 
+            
+            /* Optionnel : petite lueur extérieure pour renforcer l'effet */
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+        }
+
+        .result-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--color-accent);
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+        
+        .result-item.active .result-number {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.8);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--color-primary); 
+            color: white;
+            padding: 0;
+            font-size: 0.9rem;
+            border-top: 5px solid var(--color-accent);
+        }
+
+        .footer-top-marquee {
+            background-color: white;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-content {
+            padding: 5rem 0 3rem 0; 
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo { 
+            font-weight: bold; 
+            font-size: 1.3rem; 
+            color: var(--color-white); 
+            margin-bottom: 0.5rem; 
+        }
+
+        .contact-info p { margin-bottom: 0.5rem; color: rgba(255,255,255,0.9); }
+        .contact-info strong { color: var(--color-accent); }
+
+        .legal-text {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.6); 
+            margin-top: 2rem;
+            line-height: 1.4;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.2rem; }
+            .context-grid { grid-template-columns: 1fr; }
+            .program-card { grid-template-columns: 1fr; }
+            .program-img { min-height: 250px; }
+            
+            .nav-container {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
+            }
+            
+            .header-logos {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .footer-top { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container nav-container">
+            <div class="header-logos">
+                <img src="Ressources/LOGOJACSM.jpg" alt="Logo JACSM" class="logo-img">
+                <img src="Ressources/LOGOMETROPOLE.jpg" alt="Métropole de Lyon" class="logo-img">
+                <img src="Ressources/unioneurop.jpg" alt="FSE+ Union Européenne" class="logo-img">
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="#contexte">Le Projet</a></li>
+                    <li><a href="#programmes">Nos Programmes</a></li>
+                    <li><a href="#publics">Publics Visés</a></li>
+                    <li><a href="#contact" class="btn" style="padding: 8px 16px; font-size: 0.9rem;">Nous Contacter</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container">
+            <h1>Le Sport comme Outil de Réinsertion</h1>
+            <p>Parcours de mise en activité professionnelle pour publics éloignés de l'emploi. Un projet stratégique soutenu par le FSE+.</p>
+            <a href="#programmes" class="btn" style="background-color: var(--color-accent); color: var(--color-dark); border-color: var(--color-accent);">Découvrir les actions</a>
+        </div>
+    </section>
+
+    <!-- ANIMATION PARTENAIRES (AU MILIEU) -->
+    <section class="partners-section">
+        <div class="container">
+            <!-- TITRE SIMPLE (PLUS GROS) -->
+            <div class="partners-label">Soutenu par</div>
+        </div>
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <img src="Ressources/MISSIONLOCALE.jpg" alt="mission locale" class="marquee-logo">
+                <img src="Ressources/VILLE DELYON.jpg" alt="ville de Lyon" class="marquee-logo">
+                <img src="Ressources/FRANCEtRAVAIL.jpg" alt="FRANCEtRAVAIL" class="marquee-logo">
+                <img src="Ressources/logoOFFICIELACADEMIA.png" alt="ACADEMIA360" class="marquee-logo" style="filter: grayscale(100%); opacity: 0.5;"> 
+                
+                <img src="Ressources/MISSIONLOCALE.jpg" alt="mission locale" class="marquee-logo">
+                <img src="Ressources/VILLE DELYON.jpg" alt="ville de Lyon" class="marquee-logo">
+                <img src="Ressources/FRANCEtRAVAIL.jpg" alt="FRANCEtRAVAIL" class="marquee-logo">
+                <img src="Ressources/logoOFFICIELACADEMIA.png" alt="academia380" class="marquee-logo" style="filter: grayscale(100%); opacity: 0.5;"> 
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTEXTE -->
+    <section id="contexte" class="context">
+        <div class="container">
+            <h2 class="section-title">Contexte & Stratégie</h2>
+            <div class="context-grid">
+                <div>
+                    <div class="alert-box">
+                        <div class="alert-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                            Point d'attention FSE+
+                        </div>
+                        <p>Le projet exclut les actions <strong>exclusivement</strong> dédiées aux jeunes de moins de 30 ans. Notre approche cible un <strong>public mixte</strong> (Jeunes ET Adults +30ans).</p>
+                    </div>
+                    <p>La JACSM transforme son ADN sportif en support de travail réel. Le FSE ne finance pas le sport-loisir, mais finance la discipline, le cadre, la responsabilité et l'apprentissage des règles professionnelles.</p>
+                    <br>
+                    <p><strong>L'objectif :</strong> Favoriser l’insertion professionnelle durable par des parcours de mise en activité encadrée.</p>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Réunion stratégique" style="border-radius: var(--radius); box-shadow: var(--shadow);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROGRAMMES -->
+    <section id="programmes" class="programs">
+        <div class="container">
+            <h2 class="section-title">Nos Programmes d'Actions</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem auto; font-size: 1.1rem; color: #555;">
+                Trois leviers complémentaires pour répondre aux exigences du FSE+ et aux besoins des publics.
+            </p>
+
+            <!-- PROGRAMME 1 -->
+            <article class="program-card">
+                <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1517466787929-bc90951d0974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="program-content">
+                    <span class="program-tag">Programme Principal</span>
+                    <h3>Sport & Métiers de la Vie Locale</h3>
+                    <p><strong>Concept :</strong> Création d'un atelier d'insertion hybride exploitant les métiers du sport et de l'événementiel. Ici, on ne "pratique" pas le sport, on <strong>travaille</strong> à travers le sport.</p>
+                    <ul class="program-list">
+                        <li>Encadrement technique et cadre strict (horaires, sécurité)</li>
+                        <li>Organisation d'événements, logistique, accueil</li>
+                        <li>Compétences : Organisation du travail, ponctualité, communication</li>
+                        <li>Innovation : Réapprentissage du rapport à l'autorité</li>
+                    </ul>
+                    <div class="note-box">
+                        Résultat attendu : Sorties positives vers emploi, IAE ou formation.
+                    </div>
+                </div>
+            </article>
+
+            <!-- PROGRAMME 2 -->
+            <article class="program-card">
+                <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="program-content">
+                    <span class="program-tag secondary">Programme Complémentaire</span>
+                    <h3>Préqualification par l'activité collective</h3>
+                    <p>Un "sas" vers l'emploi pour ceux qui ne sont pas encore prêts. Ce programme sécurise les parcours et évite les sorties négatives.</p>
+                    <ul class="program-list">
+                        <li>Organisation d'événements sportifs et socio-culturels</li>
+                        <li>Coordination d'équipes et respect d'un cahier des charges</li>
+                        <li>Observation des aptitudes en situation réelle</li>
+                        <li>Orientation réaliste (emploi, formation, IAE)</li>
+                    </ul>
+                </div>
+            </article>
+
+            <!-- PROGRAMME 3 -->
+            <article class="program-card">
+                <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?w=600');"></div>
+                <div class="program-content">
+                    <span class="program-tag tertiary">Axe Spécifique</span>
+                    <h3>« Elles osent » – Parcours Femmes</h3>
+                    <p>Un programme ciblé pour les femmes éloignées de l'emploi, confrontées à des freins multiples (confiance, isolement).</p>
+                    <ul class="program-list">
+                        <li>Mise en activité collective encadrée</li>
+                        <li>Ateliers ciblés : posture pro, communication</li>
+                        <li>Accompagnement renforcé vers l'emploi</li>
+                    </ul>
+                    <div class="note-box">
+                        <strong>Point de vigilance FSE :</strong> Ce programme est toujours adossé aux activités réelles (Prog1 ou 2), jamais présenté comme du simple "coaching".
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- PUBLIC CIBLE -->
+    <section id="publics" class="audience">
+        <div class="container">
+            <h2 class="section-title">Publics Éligibles</h2>
+            <p>Nos parcours s'adressent prioritairement aux publics en difficulté.</p>
+            
+            <div class="audience-grid">
+                <div class="audience-item">Adultes (+30 ans inclus)</div>
+                <div class="audience-item">Bénéficiaires du RSA</div>
+                <div class="audience-item">Demandeurs d'emploi longue durée</div>
+                <div class="audience-item">Habitants QPV</div>
+                <div class="audience-item">Femmes (Prioritaire)</div>
+                <div class="audience-item" style="border-style: dashed;">Public Mixte (Jeunes + Adultes)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RÉSULTATS -->
+    <section class="results">
+        <div class="container">
+            <h2 class="section-title">Résultats Attendus & Impact</h2>
+            <div class="results-grid">
+                <!-- Carte 1 -->
+                <div class="result-item">
+                    <span class="result-number">100%</span>
+                    <p>de participants en mise en activité</p>
+                </div>
+                <!-- Carte 2 -->
+                <div class="result-item">
+                    <span class="result-number">>40%</span>
+                    <p>de taux d'intervention FSE estimé</p>
+                </div>
+                <!-- Carte 3 -->
+                <div class="result-item">
+                    <span class="result-number">6 mois</span>
+                    <p>De suivi des sorties positives</p>
+                </div>
+                <!-- Carte 4 -->
+                <div class="result-item">
+                    <span class="result-number">CQP</span>
+                    <p>Certifications visées (Animateur, Secourisme)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        
+        <!-- ANIMATION PARTENAIRES DANS LE FOOTER -->
+        <div class="footer-top-marquee">
+            <div class="container">
+                <!-- TITRE SIMPLE (PLUS GROS) -->
+                <div class="partners-label" style="margin-bottom:10px;">Nos Partenaires Institutionnels</div>
+            </div>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <img src="Ressources/LOGOJACSM.jpg" alt="JACSM" class="marquee-logo">
+                    <img src="Ressources/LOGOMETROPOLE.jpg" alt="Métropole de Lyon" class="marquee-logo">
+                    <img src="Ressources/unioneurop.jpg" alt="FSE+ Union Européenne" class="marquee-logo">
+                    <img src="Ressources/MISSIONLOCALE.jpg" alt="Partenaire MISSIONLOCALE" class="marquee-logo" style="filter: grayscale(100%); opacity: 0.5;">
+                    
+                    <img src="Ressources/LOGOJACSM.jpg" alt="JACSM" class="marquee-logo">
+                    <img src="Ressources/LOGOMETROPOLE.jpg" alt="Métropole de Lyon" class="marquee-logo">
+                    <img src="Ressources/unioneurop.jpg" alt="FSE+ Union Européenne" class="marquee-logo">
+                    <img src="Ressources/VILLE DELYON.jpg" alt="Partenaire" class="marquee-logo" style="filter: grayscale(100%); opacity: 0.5;">
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTENU CONTACT -->
+        <div class="container footer-content">
+            <div class="footer-top">
+                <div>
+                    <!-- MODIF: LOGO JACSM AJOUTÉ -->
+                    <img src="Ressources/LOGOJACSM-removebg-preview.png" alt="JACSM" style="height: 60px; margin-bottom: 10px; padding: 5px; border-radius: 4px;">
+                    <div class="footer-logo">JACSM Académie</div>
+                    <p>Jeunesse Art Culture Sport et Mémoire 
+                       Fondée en <strong>1997</strong> par Jean Eric Sendé, J.A.C.S.M. Académie (Jeunesse Art Culture Sport et Mémoire) est une association engagée dans   l’inclusion socioprofessionnelle des jeunes par le Sport.</p>
+                    </div>
+                <div class="contact-info">
+                    <div class="footer-logo">Contact Projet</div>
+                    <p>Pour constituer un consortium ou s'associer :</p>
+                    <p>Email: <strong>sportmemoire@gmail.com</strong></p>
+                    <p>Tél: <strong>06 51 12 78 45</strong></p>
+                    </div>
+            </div>
+
+            <div class="legal-text">
+                <p><strong>Mention obligatoire :</strong> Ce projet est cofinancé par l'Union Européenne dans le cadre du Fonds Social Européen Plus (FSE+). L'Union Européenne s'engage pour la Métropole de Lyon.</p>
+                <p>Les contenus de cette page relèvent de la seule responsabilité de l'association JACSM et ne reflètent pas nécessairement le point de vue de l'Union Européenne.</p>
+                <p>&copy; 2026 JACSM - Tous droits réservés. | By Rania.B </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPT POUR L'ANIMATION DES RÉSULTATS (CLIC) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const resultItems = document.querySelectorAll('.result-item');
+            
+            resultItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Active/Désactive la carte cliquée (Toggle)
+                    item.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
